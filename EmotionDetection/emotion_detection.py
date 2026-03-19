@@ -9,9 +9,6 @@ def emotion_detector(text_to_analyse):
     # This is the line that gets the data
     response = requests.post(url, json = myobj, headers = header)
 
-    # --- ADD THE DEBUG LINE HERE ---
-    print(f"DEBUG: Status Code is {response.status_code}")
-    # -------------------------------
 
     # Your safety gate must be IMMEDIATELY after the debug line
     if response.status_code == 400:
