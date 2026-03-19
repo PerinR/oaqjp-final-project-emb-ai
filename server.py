@@ -5,29 +5,22 @@ app = Flask("Emotion Detector")
 
 @app.route("/emotionDetector")
 def sent_detector():
-    # Retrieve the text to analyze from the request arguments
+    # 1. Get the text
     text_to_analyze = request.args.get('textToAnalyze')
-
-    # Pass the text to the emotion_detector function and get the response
+    
+    # 2. Get the dictionary from your package
     response = emotion_detector(text_to_analyze)
 
-    # Extract the values from the response dictionary
-    anger = response['anger']
-    disgust = response['disgust']
-    fear = response['fear']
-    joy = response['joy']
-    sadness = response['sadness']
-    dominant_emotion = response['dominant_emotion']
-
-    # Check if the dominant_emotion is None (for error handling in later tasks)
-    if dominant_emotion is None:
+    # 3. IMMEDIATELY check if it's the "Error Dictionary" (all Nones)
+    if response['dominant_emotion'] is None:
         return "Invalid text! Please try again!."
 
-    # Return a formatted string as requested by the customer
+    # 4. ONLY IF IT IS NOT NONE, create the success string
     return (
-        f"For the given statement, the system response is 'anger': {anger}, "
-        f"'disgust': {disgust}, 'fear': {fear}, 'joy': {joy} and 'sadness': {sadness}. "
-        f"The dominant emotion is {dominant_emotion}."
+        f"For the given statement, the system response is 'anger': {response['anger']}, "
+        f"'disgust': {response['disgust']}, 'fear': {response['fear']}, "
+        f"'joy': {response['joy']} and 'sadness': {response['sadness']}. "
+        f"The dominant emotion is {response['dominant_emotion']}."
     )
 
 @app.route("/")
